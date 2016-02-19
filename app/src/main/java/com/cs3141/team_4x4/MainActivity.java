@@ -1,13 +1,13 @@
 package com.cs3141.team_4x4;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewOverlay;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,15 +15,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Fetch references to D-pad buttons
+        ImageButton down = (ImageButton) findViewById(R.id.buttonDown);
+        ImageButton left = (ImageButton) findViewById(R.id.buttonLeft);
+        ImageButton right = (ImageButton) findViewById(R.id.buttonRight);
+        ImageButton up = (ImageButton) findViewById(R.id.buttonUp);
+
+
+        // Set listeners for buttons
+        down.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                // Can be changed to perform functions
+                ImageView image = (ImageView) findViewById(R.id.imageKnight);
+                image.setY(image.getY() + 10);
+            }
+        });
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.imageKnight);
+                image.setX(image.getX() - 10);
+            }
+        });
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.imageKnight);
+                image.setX(image.getX() + 10);
+            }
+        });
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.imageKnight);
+                image.setY(image.getY() - 10);
             }
         });
     }
