@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".StartScreen"
+    android:background="@color/background_color">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let's get started!"
+        android:id="@+id/StartButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textStyle="normal"
+        android:textColor="@color/title_color" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/Story">
+
+        <TextView
+            android:layout_width="586dip"
+            android:layout_height="90dip"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Binary was a land of peace, ruled by the good king Groshi. One day, the Dark Knight and his armies descended upon the kingdom, throwing it into chaos. The Dark Knight killed Groshi and kidnapped his daughter Elsie. Only one member of the kingdom could hope to save it..."
+            android:id="@+id/textView"
+            android:layout_weight="0.05"
+            android:textColor="@color/text_color"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="147dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="THE 4 BYTE WARRIOR"
+            android:id="@+id/textView2"
+            android:textColor="@color/title_color"
+            android:textStyle="bold|italic"
+            android:typeface="serif"
+            android:width="8dip"
+            android:textAlignment="center"
+            android:textSize="50dip"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

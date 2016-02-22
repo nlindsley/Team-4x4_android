@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageBackground"
+        android:background="@drawable/grass"
+        android:scaleType="center" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageKnight"
+        android:src="@drawable/knight"
+        android:layout_marginBottom="0dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:id="@+id/buttonDown"
+            android:src="@drawable/arrow_down"
+            android:background="@null"
+            android:alpha=".5"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/buttonLeft" />
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:id="@+id/buttonLeft"
+            android:src="@drawable/arrow_left"
+            android:background="@null"
+            android:alpha=".5"
+            android:layout_above="@+id/buttonDown"
+            android:layout_marginLeft="0dp" />
+
+        <ImageButton
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:id="@+id/buttonRight"
+            android:src="@drawable/arrow_right"
+            android:background="@null"
+            android:alpha=".5"
+            android:layout_above="@+id/buttonDown"
+            android:layout_toRightOf="@+id/buttonDown"/>
+
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:id="@+id/buttonUp"
+            android:src="@drawable/arrow_up"
+            android:background="@null"
+            android:alpha=".5"
+            android:layout_above="@+id/buttonRight"
+            android:layout_alignLeft="@+id/buttonDown" />
+    </RelativeLayout>
+
+</FrameLayout>

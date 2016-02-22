@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Credits"
+        android:id="@+id/textView2"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:width="8dp"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:textSize="93sp"
+        android:textColor="@color/title_color" />
+
+    <TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:stretchColumns="1"
+        android:orientation="vertical"
+        android:id="@+id/who">
+    <TableRow>
+        <TextView
+            android:text="Nick Lindsley"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"/>
+        <TextView
+            android:text="Software Engineer"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"
+            android:gravity="right"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="Charlie Heckel"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"/>
+        <TextView
+            android:text="Computer Science"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"
+            android:gravity="right"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="Ben McWerthy"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"/>
+        <TextView
+            android:text="Computer Science"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"
+            android:gravity="right"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:text="Alex Friebe"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"/>
+        <TextView
+            android:text="Computer Science"
+            android:textColor="@color/text_color"
+            android:padding="4dip"
+            android:textSize="20sp"
+            android:gravity="right"/>
+    </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:layout_width="301dp"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="A Team 4x4 Production for TSP"
+        android:textColor="@color/text_color"
+        android:id="@+id/textView4"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textAlignment="gravity" />
+
+</LinearLayout>
