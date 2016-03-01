@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_color">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="title_color">#D81111</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <string name="app_name">4 Byte Warrior</string>
+    <string name="high_scores_title">High Scores</string>
+    <string name="title_activity_info_screen">InfoScreen</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <style name="GdxTheme" parent="android:Theme">
+		<item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>

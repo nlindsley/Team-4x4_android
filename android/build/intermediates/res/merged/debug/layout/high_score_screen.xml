@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="@color/background_color">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/high_scores_title"
+        android:id="@+id/highScoresTitle"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:width="3dp"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:textSize="91sp"
+        android:textColor="@color/title_color"
+        android:layout_weight="0.11" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <TableRow>
+            <TextView
+                android:text="High Score 1"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"/>
+            <TextView
+                android:text="Score 1"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"
+                android:gravity="right"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="High Score 2"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"/>
+            <TextView
+                android:text="Score 2"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"
+                android:gravity="right"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="High Score 3"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"/>
+            <TextView
+                android:text="Score 3"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"
+                android:gravity="right"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="High Score 4"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"/>
+            <TextView
+                android:text="Score 4"
+                android:textColor="@color/text_color"
+                android:padding="4dip"
+                android:textSize="30sp"
+                android:gravity="right"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
