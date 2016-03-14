@@ -48,7 +48,7 @@ public class TSPGame extends ApplicationAdapter {
 		FileHandle fileHandle;
 		try {
 			// Reads level file into string
-			fileHandle = Gdx.files.internal("level00.txt");
+			fileHandle = Gdx.files.internal("levels/level00.txt");
 			String fileContents = fileHandle.readString();
 
 			String[] lines = fileContents.split("\n");
