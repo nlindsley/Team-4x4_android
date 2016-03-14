@@ -1,0 +1,16 @@
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 a a a 0 0 a a y 0 a a y 0 0 1
+1 a a a 0 0 a a 0 0 a a 0 0 0 1
+1 a a a 0 0 a a 0 0 a a 0 0 0 1
+1 a a a y 0 a a 0 0 a a 0 0 0 1
+1 a a a 0 0 a a 0 0 a a 0 0 0 1
+0 0 0 0 0 0 a a y 0 a a y 0 0 1
+0 0 0 0 0 0 a a 0 0 a a 0 0 0 1
+1 a a a x 0 0 0 0 0 a a 0 0 0 1
+1 a a a 0 0 0 0 0 0 a a 0 0 0 1
+1 a a a 0 0 a a y 0 a a y 0 0 1
+1 a a a 0 0 a a 0 0 a a 0 0 0 1
+1 a a a 0 0 a a 0 0 a a 0 0 0 1
+1 a a a y 0 a a 0 0 0 0 0 0 0 1
+1 a a a 0 0 a a 0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1

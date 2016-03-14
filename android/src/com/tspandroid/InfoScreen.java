@@ -18,10 +18,22 @@ public class InfoScreen extends Activity {
 
             case 1:
                 setContentView(R.layout.credits_screen);
+                findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
                 break;
 
             case 2:
                 setContentView(R.layout.high_score_screen);
+                findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
                 break;
 
             case 3:

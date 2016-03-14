@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/build/intermediates/res/merged/debug/values/values.xml",
+        "outputFile": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/values/values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 101
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 147
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 194
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 245
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -87,7 +87,7 @@
                     "endOffset": 290
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -106,7 +106,7 @@
                     "endOffset": 336
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/colors.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/colors.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -125,7 +125,7 @@
                     "endOffset": 394
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/dimens.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/dimens.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -144,7 +144,7 @@
                     "endOffset": 450
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/dimens.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/dimens.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -163,7 +163,7 @@
                     "endOffset": 502
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/strings.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -178,11 +178,30 @@
                     "startLine": 11,
                     "startColumn": 4,
                     "startOffset": 507,
-                    "endColumn": 57,
-                    "endOffset": 560
+                    "endColumn": 44,
+                    "endOffset": 547
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/strings.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 369,
+                        "endColumn": 44,
+                        "endOffset": 409
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 552,
+                    "endColumn": 57,
+                    "endOffset": 605
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -194,14 +213,14 @@
             },
             {
                 "to": {
-                    "startLine": 12,
+                    "startLine": 13,
                     "startColumn": 4,
-                    "startOffset": 565,
+                    "startOffset": 610,
                     "endColumn": 65,
-                    "endOffset": 626
+                    "endOffset": 671
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/strings.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -213,14 +232,14 @@
             },
             {
                 "to": {
-                    "startLine": 13,
+                    "startLine": 14,
                     "startColumn": 4,
-                    "startOffset": 631,
+                    "startOffset": 676,
                     "endColumn": 65,
-                    "endOffset": 692
+                    "endOffset": 737
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/strings.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -232,14 +251,14 @@
             },
             {
                 "to": {
-                    "startLine": 14,
+                    "startLine": 15,
                     "startColumn": 4,
-                    "startOffset": 697,
+                    "startOffset": 742,
                     "endColumn": 69,
-                    "endOffset": 762
+                    "endOffset": 807
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/strings.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/strings.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -251,15 +270,307 @@
             },
             {
                 "to": {
-                    "startLine": 15,
+                    "startLine": 16,
                     "startColumn": 4,
-                    "startOffset": 767,
-                    "endLine": 22,
+                    "startOffset": 812,
+                    "endLine": 23,
                     "endColumn": 12,
-                    "endOffset": 1225
+                    "endOffset": 1270
                 },
                 "from": {
-                    "file": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/values/styles.xml",
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/values/styles.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 17,
+                        "endLine": 9,
+                        "endColumn": 12,
+                        "endOffset": 475
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 50,
+                    "endOffset": 101
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 290,
+                        "endColumn": 50,
+                        "endOffset": 336
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 106,
+                    "endColumn": 45,
+                    "endOffset": 147
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 153,
+                        "endColumn": 45,
+                        "endOffset": 194
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 152,
+                    "endColumn": 46,
+                    "endOffset": 194
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 46,
+                        "endOffset": 97
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 199,
+                    "endColumn": 50,
+                    "endOffset": 245
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 102,
+                        "endColumn": 50,
+                        "endOffset": 148
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 250,
+                    "endColumn": 44,
+                    "endOffset": 290
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 245,
+                        "endColumn": 44,
+                        "endOffset": 285
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 295,
+                    "endColumn": 45,
+                    "endOffset": 336
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/colors.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 199,
+                        "endColumn": 45,
+                        "endOffset": 240
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 341,
+                    "endColumn": 57,
+                    "endOffset": 394
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/dimens.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 88,
+                        "endColumn": 57,
+                        "endOffset": 141
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 399,
+                    "endColumn": 55,
+                    "endOffset": 450
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 146,
+                        "endColumn": 55,
+                        "endOffset": 197
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 455,
+                    "endColumn": 51,
+                    "endOffset": 502
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endColumn": 51,
+                        "endOffset": 103
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 507,
+                    "endColumn": 44,
+                    "endOffset": 547
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 369,
+                        "endColumn": 44,
+                        "endOffset": 409
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 552,
+                    "endColumn": 57,
+                    "endOffset": 605
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 311,
+                        "endColumn": 57,
+                        "endOffset": 364
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 610,
+                    "endColumn": 65,
+                    "endOffset": 671
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 244,
+                        "endColumn": 65,
+                        "endOffset": 305
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 676,
+                    "endColumn": 65,
+                    "endOffset": 737
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 178,
+                        "endColumn": 65,
+                        "endOffset": 239
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 742,
+                    "endColumn": 69,
+                    "endOffset": 807
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 108,
+                        "endColumn": 69,
+                        "endOffset": 173
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 812,
+                    "endLine": 23,
+                    "endColumn": 12,
+                    "endOffset": 1270
+                },
+                "from": {
+                    "file": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/values/styles.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

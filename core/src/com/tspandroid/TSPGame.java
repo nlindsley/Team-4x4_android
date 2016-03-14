@@ -4,9 +4,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +26,8 @@ import java.util.List;
  * @author Ben McWethy
  */
 public class TSPGame extends ApplicationAdapter {
+	Camera			camera;
+	Viewport		viewport;
 	SpriteBatch 	batch;
 	Player			player;
 	Enemy			enemy;
@@ -39,19 +47,16 @@ public class TSPGame extends ApplicationAdapter {
 		int lineNum = 0;
 		FileHandle fileHandle;
 		try {
-			Gdx.app.log("!!!", "try entered");
 			// Reads level file into string
-			fileHandle = Gdx.files.internal("level00A.txt");
+			fileHandle = Gdx.files.internal("level00.txt");
 			String fileContents = fileHandle.readString();
 
 			String[] lines = fileContents.split("\n");
 			int blockHeight = 0;	// file is read in line-by-line, so we'll use a simple counter for height
 			// level will be upside-down from txt file
 			while(!lines[lineNum].isEmpty()) {
-				Gdx.app.log("!!!", "while loop entered");
 				String[] levelGrid = lines[lineNum].split(" ");	// puts everything in-between white-spaces into an array spot
 
-				Gdx.app.log("!!!", "Line contains: "+lines[lineNum]);
 				for(int i = 0; i < levelGrid.length; i += 1) {
 					Background grass = new Background(this, i*32, blockHeight*32);
 					bgArr.add(grass);
@@ -61,7 +66,6 @@ public class TSPGame extends ApplicationAdapter {
 					}
 					if(levelGrid[i].equals("p")) {
 						player = new Player(this,i*32,blockHeight*32);
-						Gdx.app.log("!!!", "Player created");
 					}
 					if(levelGrid[i].equals("e")) {
 						enemy = new Enemy(this,i*32,blockHeight*32);
@@ -71,11 +75,11 @@ public class TSPGame extends ApplicationAdapter {
 					}
 				}
 				blockHeight += 1;
-				screenWidth = levelGrid.length;
+				//screenWidth = levelGrid.length;
 
 				lineNum++;
 			}
-			screenHeight = blockHeight;
+			//screenHeight = blockHeight;
 		} catch (Exception e) {
 			System.out.println("CUSTOM ERROR: NEEDS A LEVEL FILE");
 			e.printStackTrace();
@@ -84,7 +88,9 @@ public class TSPGame extends ApplicationAdapter {
 
 	/** Initialize all variables when game starts. */
 	@Override
-	public void create () {		// default screen size= (640,480) change in respective platform project
+	public void create () {
+		screenHeight = Gdx.graphics.getHeight();
+		screenWidth = Gdx.graphics.getWidth();
 		loadLevel();
 
 		batch	= new SpriteBatch();
@@ -161,12 +167,12 @@ public class TSPGame extends ApplicationAdapter {
 		}
 
 		// HUD management
-		batch.draw(Textures.HUD,  0, (screenHeight*32)-64);	// must go last, has to display over everything else
-		font.draw(batch,  "Your lives: " + player.lives,  10, (screenHeight*32)-10);
-		batch.draw(Textures.HUD, (screenWidth*32)-128, (screenHeight*32)-64);	// must go last, has to display over everything else
-		font.draw(batch,  "Enemy lives: " + enemy.lives,  (screenWidth*32)-118, (screenHeight*32)-10);
+		batch.draw(Textures.HUD,  0, screenHeight-64);	// must go last, has to display over everything else
+		font.draw(batch,  "Your lives: " + player.lives,  10, screenHeight-10);
+		batch.draw(Textures.HUD, screenWidth-128, screenHeight-64);	// must go last, has to display over everything else
+		font.draw(batch,  "Enemy lives: " + enemy.lives,  screenWidth-118, screenHeight-10);
 		for(int i = 0; i < ammo; i += 1) {
-			batch.draw(Textures.BULLET,  i*7,  (screenHeight*32)-64);
+			batch.draw(Textures.BULLET,  i*7,  screenHeight-64);
 		}
 
 		batch.end();

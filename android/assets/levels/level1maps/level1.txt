@@ -1,0 +1,5 @@
+0	0	0	0	l1b.txt
+0	l1mb.txt	l1r6.txt	l1r7.txt	l1r8.txt
+0	0	l1r5.txt	0	0
+0	0	l1r4.txt	0	0
+l1r1.txt	l1r2.txt	l1r3.txt

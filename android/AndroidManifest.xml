@@ -8,17 +8,23 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/blackknight"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme">
         <activity
             android:name=".AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name=".SplashScreen"
-            android:label="@string/title_activity_splash_screen"
+            android:label="@string/app_name"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +34,11 @@
         </activity>
         <activity
             android:name=".MainScreen"
-            android:label="@string/title_activity_main_screen"
+            android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
             android:name=".InfoScreen"
-            android:label="@string/title_activity_info_screen"
+            android:label="@string/app_name"
             android:parentActivityName=".MainScreen"
             android:screenOrientation="landscape">
             <meta-data

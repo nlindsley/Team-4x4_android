@@ -7,5 +7,6 @@
     <string name="title_activity_info_screen">InfoScreen</string>
 
     <string name="high_scores_title">High Scores</string>
+    <string name="back_button">Back</string>
 
 </resources>

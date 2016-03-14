@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/high_scores_title"
         android:id="@+id/highScoresTitle"
@@ -22,7 +22,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:stretchColumns="1">
         <TableRow>
             <TextView
@@ -80,5 +80,12 @@
                 android:gravity="right"/>
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/back_button"
+        android:id="@+id/backButton" />
 
 </LinearLayout>

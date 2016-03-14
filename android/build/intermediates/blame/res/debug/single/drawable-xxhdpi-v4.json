@@ -1,6 +1,18 @@
 [
     {
-        "merged": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
-        "source": "/Users/nicklindsley/Documents/Github/TSPAndroid/android/res/drawable-xxhdpi/ic_launcher.png"
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/blackknight.png",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/drawable-xxhdpi/blackknight.png"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/blackknight.png",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/drawable-xxhdpi/blackknight.png"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/drawable-xxhdpi/ic_launcher.png"
     }
 ]
