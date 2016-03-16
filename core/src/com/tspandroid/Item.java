@@ -5,5 +5,7 @@ public class Item extends Character {
 		super(game, x, y);
 		
 		defText = Textures.AMMO;
+		width = 32;
+		height = 32;
 	}
 }

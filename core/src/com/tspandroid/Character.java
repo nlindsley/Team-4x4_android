@@ -14,7 +14,11 @@ public class Character {
 	boolean alive = true;
 	boolean isBullet;
 	boolean isPlayer;
-	int lives = 3;
+	boolean isEnemy;
+	boolean xPatrol;
+	int width;
+	int height;
+	int lives;
 	int lastFacing; // 0 is left, 1 is down, 2 is right, 3 is up
 	Texture defText = Textures.DEFAULT;
 
@@ -31,10 +35,12 @@ public class Character {
 	public void xMove(int amount) {
 		x += amount;	// allows movement (left-right)
 
-		if(this.isCollidingWith(game.enemy) && !isBullet) {
-			x -= 5*amount;
-			game.keyBoardListener.keysPressed[Keys.LEFT] = false;
-			game.keyBoardListener.keysPressed[Keys.RIGHT] = false;
+		for(Enemy e : game.enemies) {
+			if(this.isCollidingWith(e) && !isBullet) {
+				x -= amount;
+				game.keyBoardListener.keysPressed[Keys.LEFT] = false;
+				game.keyBoardListener.keysPressed[Keys.RIGHT] = false;
+			}
 		}
 		for(int i = 0; i < game.blockArr.size(); i += 1) {
 			if(this.isCollidingWith(game.blockArr.get(i))) {
@@ -48,10 +54,12 @@ public class Character {
 	public void yMove(int amount) {
 		y += amount;	// allows movement (up-down)
 
-		if(this.isCollidingWith(game.enemy) && !isBullet) { 
-			y -= 5*amount;
-			game.keyBoardListener.keysPressed[Keys.UP] = false;
-			game.keyBoardListener.keysPressed[Keys.DOWN] = false;
+		for(Enemy e : game.enemies) {
+			if(this.isCollidingWith(e) && !isBullet) { 
+				y -= amount;
+				game.keyBoardListener.keysPressed[Keys.UP] = false;
+				game.keyBoardListener.keysPressed[Keys.DOWN] = false;
+			}
 		}
 		for(int i = 0; i < game.blockArr.size(); i += 1) {
 			if(this.isCollidingWith(game.blockArr.get(i))) {
@@ -67,32 +75,56 @@ public class Character {
 			lives = 0;
 			alive = false;
 			x = -64;
-			y = 64;
+			y = -64;
 		}
 		
 		x += xVelocity;
 		y += yVelocity;
 
-		for(int i = 0; i < game.blockArr.size(); i += 1) {
-			if(game.blockArr.get(i).isCollidingWith(this)) {
-				// removes the bullet when it hits a block
-				if(isBullet) {
-					alive = false;
-					game.blockArr.get(i).alive = false;
+		for(Enemy e : game.enemies) {
+			for(int i = 0; i < game.blockArr.size(); i += 1) {
+				if(game.blockArr.get(i).isCollidingWith(this)) {
+					// removes the bullet when it hits a block
+					if(isBullet) {
+						alive = false;
+						if(!game.blockArr.get(i).unbreakable) {
+							game.blockArr.get(i).alive = false;
+						}
+					} else {
+						e.turnEnemy();
+					}
 				}
 			}
+			if(game.player.isCollidingWith(e)) { e.turnEnemy(); game.player.lives -= 5;}
 		}
-		if(y <= 0 && (!isBullet)) {	// stops us from walking off the map, prevents bullets from respawning
-			lives -= 1;
-			x = 100;	// move the player back on screen
-			y = 200;
+		
+		
+		if(isPlayer) {	// handles room transitions
+			if(y <= 0) {
+				game.loadRoom(game.rooms[game.player.currentRoomX][++game.player.currentRoomY]);
+				y = 480;	// 512 - 32
+			}
+			if(y >= 512) {
+				game.loadRoom(game.rooms[game.player.currentRoomX][--game.player.currentRoomY]);
+				y = 32;
+			}
+			if(x <= 0) {
+				game.loadRoom(game.rooms[--game.player.currentRoomX][game.player.currentRoomY]);
+				x = 480;	// 512 - 32
+			}
+			if(x >= 512) {
+				game.loadRoom(game.rooms[++game.player.currentRoomX][game.player.currentRoomY]);
+				x = 32;
+			}
 		}
 
 		for(int i = 0; i < game.items.size(); i += 1) {
-			if(this.isCollidingWith(game.items.get(i)) && !isBullet) {
-				if(game.ammo+5 > 14) {	// prevent break ammo capacity
+			if(game.player.isCollidingWith(game.items.get(i))) {
+				if(game.ammo == 14) {
+					continue;
+				} else if(game.ammo+5 > 14) {	// prevent break ammo capacity
 					game.ammo = 14;
-				} else {
+				} else if( game.ammo+5 <= 14) {
 					game.ammo += 5;
 				}
 				game.items.get(i).alive = false;
@@ -102,8 +134,8 @@ public class Character {
 
 	boolean isCollidingWith(Character other) {
 		// Create a bounding rectangle over each character
-		Rectangle thisCharacter = new Rectangle((int)x, (int)y, 57, 62);
-		Rectangle otherCharacter = new Rectangle((int)other.x, (int)other.y, 32, 32);
+		Rectangle thisCharacter = new Rectangle((int)x, (int)y, width, height);
+		Rectangle otherCharacter = new Rectangle((int)other.x, (int)other.y, other.width, other.height);
 
 		return thisCharacter.overlaps(otherCharacter);
 	}
