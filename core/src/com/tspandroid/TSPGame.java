@@ -44,8 +44,8 @@ public class TSPGame extends ApplicationAdapter {
 	public void create () {
 		screenHeight = Gdx.graphics.getHeight();
 		screenWidth = Gdx.graphics.getWidth();
-		loadLevel("level00.txt");
-		loadRoom("l1r1.txt");
+		loadLevel("level1maps/level1.txt");
+		loadRoom("level1maps/l1r1.txt");
 		player.currentRoomX = 0;	// set player tracking to first room on map (bottom-left corner)
 		player.currentRoomY = 4;
 
@@ -80,7 +80,6 @@ public class TSPGame extends ApplicationAdapter {
 
 				lineNum++;
 			}
-			fileHandle.delete();
 		} catch (Exception e) {
 			System.out.println("CUSTOM ERROR: NEEDS A LEVEL FILE");
 			e.printStackTrace();
@@ -92,6 +91,7 @@ public class TSPGame extends ApplicationAdapter {
 		int lineNum = 0;
 		FileHandle fileHandle;
 		try {
+			Gdx.app.log("!!!", "load room started");
 			fileHandle = Gdx.files.internal("levels/"+lxrx);
 			String fileContents = fileHandle.readString();
 			int blockHeight = 0;	// file is read in line-by-line, so we'll use a simple counter for height
@@ -106,6 +106,7 @@ public class TSPGame extends ApplicationAdapter {
 
 			String[] lines = fileContents.split("\n");
 			while(!lines[lineNum].isEmpty()) {
+				Gdx.app.log("!!!", "load room while loop");
 				String[] levelGrid = lines[lineNum].split(" ");	// puts everything in-between white-spaces into an array spot
 
 				for(int i = 0; i < levelGrid.length; i += 1) {
@@ -136,8 +137,8 @@ public class TSPGame extends ApplicationAdapter {
 					}
 				}
 				blockHeight += 1;
+				lineNum++;
 			}
-			fileHandle.delete();
 		} catch (Exception e) {
 			System.out.println("CUSTOM ERROR: NEEDS A ROOM FILE");
 		}
