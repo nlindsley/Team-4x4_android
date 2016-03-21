@@ -6,8 +6,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -24,6 +31,7 @@ import java.util.List;
 public class TSPGame extends ApplicationAdapter {
 	Camera			camera;
 	Viewport		viewport;
+	Stage 			stage;
 	SpriteBatch 	batch;
 	Player			player;
 	List<Enemy>		enemies		= new ArrayList<Enemy>();
@@ -42,8 +50,14 @@ public class TSPGame extends ApplicationAdapter {
 	/** Initialize all variables when game starts. */
 	@Override
 	public void create () {
-		screenHeight = Gdx.graphics.getHeight();
-		screenWidth = Gdx.graphics.getWidth();
+		camera = new OrthographicCamera();
+		viewport = new FitViewport(512,514,camera);
+		viewport.apply();
+		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+		//viewport = new StretchViewport(800, 480, camera);
+
+		//screenHeight = Gdx.graphics.getHeight();
+		//screenWidth = Gdx.graphics.getWidth();
 		loadLevel("level1maps/level1.txt");
 		loadRoom("level1maps/l1r1.txt");
 		player.currentRoomX = 0;	// set player tracking to first room on map (bottom-left corner)
@@ -53,6 +67,11 @@ public class TSPGame extends ApplicationAdapter {
 		font	= new BitmapFont();				// default 15pt arial from libgdx JAR file
 		keyBoardListener = new Listener();
 		Gdx.input.setInputProcessor(keyBoardListener);
+
+		/*/ Creates overlay for UI
+		stage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(stage);
+		//*/
 	}
 
 	/** loads the level based on a file input of 0's (air), 1's (blocks), and x's(spawns). */
@@ -137,8 +156,10 @@ public class TSPGame extends ApplicationAdapter {
 					}
 				}
 				blockHeight += 1;
+				screenWidth = levelGrid.length;
 				lineNum++;
 			}
+			screenHeight = blockHeight;
 		} catch (Exception e) {
 			System.out.println("CUSTOM ERROR: NEEDS A ROOM FILE");
 		}
@@ -149,6 +170,7 @@ public class TSPGame extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);	// r,g,b,alpha (values: 0-1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
 		player.update();
 		for(Enemy e : enemies) { e.update(); }
 
@@ -174,6 +196,7 @@ public class TSPGame extends ApplicationAdapter {
 		}
 		
 		// Everything that is drawn to the screen should be between ".begin" and ".end"
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
 		for(Background c : bgArr) 	{ c.draw(batch); }
@@ -221,13 +244,19 @@ public class TSPGame extends ApplicationAdapter {
 		}
 
 		// HUD management
-		batch.draw(Textures.HUD,  0, screenHeight-64);	// must go last, has to display over everything else
-		font.draw(batch,  "Your lives: " + player.lives,  10, screenHeight-10);
+		batch.draw(Textures.HUD,  0, screenHeight*32);	// must go last, has to display over everything else
+		font.draw(batch,  "Your lives: " + player.lives,  10, (screenHeight*32)+48);
 		for(int i = 0; i < ammo; i += 1) {
-			batch.draw(Textures.BULLET,  i*7,  screenHeight-64);
+			batch.draw(Textures.BULLET,  i*7,  screenHeight*32);
 		}
 
 		batch.end();
 		// Everything that is drawn to the screen should be between ".begin" and ".end"
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		viewport.update(width,height);
+		camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 	}
 }
