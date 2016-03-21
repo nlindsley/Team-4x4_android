@@ -7,14 +7,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -50,14 +46,12 @@ public class TSPGame extends ApplicationAdapter {
 	/** Initialize all variables when game starts. */
 	@Override
 	public void create () {
+		// Scales the screen with black bars
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(512,514,camera);
+		viewport = new FitViewport(512, 512, camera);
 		viewport.apply();
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-		//viewport = new StretchViewport(800, 480, camera);
 
-		//screenHeight = Gdx.graphics.getHeight();
-		//screenWidth = Gdx.graphics.getWidth();
 		loadLevel("level1maps/level1.txt");
 		loadRoom("level1maps/l1r1.txt");
 		player.currentRoomX = 0;	// set player tracking to first room on map (bottom-left corner)
