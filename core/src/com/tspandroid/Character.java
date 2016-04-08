@@ -109,6 +109,7 @@ public class Character {
 				y = 32;
 			}
 			if(x <= 0) {
+				// Error here that causes crash when character dies (in first room)
 				game.loadRoom(game.rooms[--game.player.currentRoomX][game.player.currentRoomY]);
 				x = 480;	// 512 - 32
 			}

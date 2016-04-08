@@ -1,5 +1,6 @@
 package com.tspandroid;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 public class Listener implements InputProcessor {
@@ -30,6 +31,7 @@ public class Listener implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
+		Gdx.app.log("!!!", "input = "+screenX+", "+screenY+", "+pointer+", "+button);
 		return false;
 	}
 

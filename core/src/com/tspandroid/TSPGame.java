@@ -7,10 +7,23 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
@@ -35,11 +48,14 @@ public class TSPGame extends ApplicationAdapter {
 	List<Block>		blockArr	= new ArrayList<Block>();		// an array list allows for multiple on screen
 	List<Background>bgArr		= new ArrayList<Background>();
 	List<Item>		items		= new ArrayList<Item>();		// list of active items
-	List<String[][]>levels		= new ArrayList<String[][]>();	// contains all levels for the game
-	String[][]		rooms		= new String[8][8];				// contains all rooms for the level
+	List<String[][]>levels		= new ArrayList<String[][]>();		// contains all levels for the game
+	String[][]		rooms		= new String[8][8];			// contains all rooms for the level
 	Listener		keyBoardListener;
+	TouchListener touchListener;
 	int ammo = 10;
 	BitmapFont font;	// pre-made font for libgdx
+	final int gameHeight = 512;
+	final int gameWidth = 512;
 	int screenHeight;
 	int screenWidth;
 
@@ -47,11 +63,16 @@ public class TSPGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		// Scales the screen with black bars
+		screenHeight = Gdx.graphics.getHeight();
+		screenWidth = Gdx.graphics.getWidth();
+		Gdx.app.log("!!!", "height = "+screenHeight+", width = "+screenWidth);
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(512, 512, camera);
+		viewport = new StretchViewport(gameWidth, gameHeight, camera);
 		viewport.apply();
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
+
+		// Loads level and room
 		loadLevel("level1maps/level1.txt");
 		loadRoom("level1maps/l1r1.txt");
 		player.currentRoomX = 0;	// set player tracking to first room on map (bottom-left corner)
@@ -60,12 +81,76 @@ public class TSPGame extends ApplicationAdapter {
 		batch	= new SpriteBatch();
 		font	= new BitmapFont();				// default 15pt arial from libgdx JAR file
 		keyBoardListener = new Listener();
-		Gdx.input.setInputProcessor(keyBoardListener);
+		touchListener = new TouchListener(gameHeight, gameWidth, screenHeight, screenWidth);
+		//Gdx.input.setInputProcessor(keyBoardListener);
 
-		/*/ Creates overlay for UI
-		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
-		//*/
+
+		// Creates overlay for UI
+		loadUI();
+	}
+
+	/** Creates UI buttons and draws them over the screen. */
+	public void loadUI() {
+		Skin skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
+		stage = new Stage(viewport);
+
+		// Create buttons
+		final TextButton buttonUp = new TextButton("Up", skin, "default");
+		final TextButton buttonDown = new TextButton("Down", skin, "default");
+		final TextButton buttonLeft = new TextButton("Left", skin, "default");
+		final TextButton buttonRight = new TextButton("Right", skin, "default");
+		final TextButton buttonA = new TextButton("A", skin, "default");
+		final TextButton buttonB = new TextButton("B", skin, "default");
+		final TextButton buttonPause = new TextButton("Pause", skin, "default");
+
+		// Position buttons
+		buttonUp.setWidth(50);
+		buttonUp.setHeight(50);
+		buttonUp.setPosition(50, 100);
+
+		buttonDown.setWidth(50);
+		buttonDown.setHeight(50);
+		buttonDown.setPosition(50, 0);
+
+		buttonLeft.setWidth(50);
+		buttonLeft.setHeight(50);
+		buttonLeft.setPosition(0, 50);
+
+		buttonRight.setWidth(50);
+		buttonRight.setHeight(50);
+		buttonRight.setPosition(100, 50);
+
+		buttonA.setWidth(50);
+		buttonA.setHeight(50);
+		buttonA.setPosition(387, 50);
+
+		buttonB.setWidth(50);
+		buttonB.setHeight(50);
+		buttonB.setPosition(462, 50);
+
+		buttonPause.setWidth(50);
+		buttonPause.setHeight(50);
+		buttonPause.setPosition(231, 0);
+
+		// Add listeners
+		buttonUp.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.log("!!!", "Up Button clicked");
+				player.yMove(5);	player.lastFacing = 3; player.defText = Textures.PLAYER3;
+			}
+		});
+
+		// Add buttons to stage to be drawn
+		stage.addActor(buttonUp);
+		stage.addActor(buttonDown);
+		stage.addActor(buttonLeft);
+		stage.addActor(buttonRight);
+		stage.addActor(buttonA);
+		stage.addActor(buttonB);
+		stage.addActor(buttonPause);
+
+		Gdx.input.setInputProcessor(touchListener);
 	}
 
 	/** loads the level based on a file input of 0's (air), 1's (blocks), and x's(spawns). */
@@ -104,7 +189,6 @@ public class TSPGame extends ApplicationAdapter {
 		int lineNum = 0;
 		FileHandle fileHandle;
 		try {
-			Gdx.app.log("!!!", "load room started");
 			fileHandle = Gdx.files.internal("levels/"+lxrx);
 			String fileContents = fileHandle.readString();
 			int blockHeight = 0;	// file is read in line-by-line, so we'll use a simple counter for height
@@ -119,7 +203,6 @@ public class TSPGame extends ApplicationAdapter {
 
 			String[] lines = fileContents.split("\n");
 			while(!lines[lineNum].isEmpty()) {
-				Gdx.app.log("!!!", "load room while loop");
 				String[] levelGrid = lines[lineNum].split(" ");	// puts everything in-between white-spaces into an array spot
 
 				for(int i = 0; i < levelGrid.length; i += 1) {
@@ -150,10 +233,10 @@ public class TSPGame extends ApplicationAdapter {
 					}
 				}
 				blockHeight += 1;
-				screenWidth = levelGrid.length;
+				//screenWidth = levelGrid.length;
 				lineNum++;
 			}
-			screenHeight = blockHeight;
+			//screenHeight = blockHeight;
 		} catch (Exception e) {
 			System.out.println("CUSTOM ERROR: NEEDS A ROOM FILE");
 		}
@@ -170,19 +253,19 @@ public class TSPGame extends ApplicationAdapter {
 
 		// Player Management
 		if(player.alive) {
-			if(keyBoardListener.keysPressed[Keys.LEFT])		{ player.xMove(-5);	player.lastFacing = 0; player.defText = Textures.PLAYER0; }
-			if(keyBoardListener.keysPressed[Keys.RIGHT])	{ player.xMove(5);	player.lastFacing = 2; player.defText = Textures.PLAYER2; }
-			if(keyBoardListener.keysPressed[Keys.UP])		{ player.yMove(5);	player.lastFacing = 3; player.defText = Textures.PLAYER3; }
-			if(keyBoardListener.keysPressed[Keys.DOWN])		{ player.yMove(-5);	player.lastFacing = 1; player.defText = Textures.PLAYER1; }
-			if(keyBoardListener.keysPressed[Keys.Z])		{
-				keyBoardListener.keysPressed[Keys.Z] = false;	// fires once per press
+			if(touchListener.buttonPressed[touchListener.LEFT])		{ player.xMove(-5);	player.lastFacing = 0; player.defText = Textures.PLAYER0; }
+			if(touchListener.buttonPressed[touchListener.RIGHT])	{ player.xMove(5);	player.lastFacing = 2; player.defText = Textures.PLAYER2; }
+			if(touchListener.buttonPressed[touchListener.UP])		{ player.yMove(5);	player.lastFacing = 3; player.defText = Textures.PLAYER3; }
+			if(touchListener.buttonPressed[touchListener.DOWN])		{ player.yMove(-5);	player.lastFacing = 1; player.defText = Textures.PLAYER1; }
+			if(touchListener.buttonPressed[touchListener.B])		{
+				touchListener.buttonPressed[touchListener.B] = false;	// fires once per press
 				if(ammo > 0) {
 					ammo -= 1;
 					Bullet bullet = new Bullet(this,(int)player.x, (int)player.y+8);
-					if(keyBoardListener.keysPressed[Keys.UP]	||	player.lastFacing == 3)		{ bullet.setYVelocity(15); }
-					if(keyBoardListener.keysPressed[Keys.DOWN]	||	player.lastFacing == 1) 	{ bullet.setYVelocity(-15); }
-					if(keyBoardListener.keysPressed[Keys.LEFT]	||	player.lastFacing == 0) 	{ bullet.setXVelocity(-15); }
-					if(keyBoardListener.keysPressed[Keys.RIGHT]	||	player.lastFacing == 2) 	{ bullet.setXVelocity(15); }
+					if(touchListener.buttonPressed[touchListener.UP]	||	player.lastFacing == 3)		{ bullet.setYVelocity(15); }
+					if(touchListener.buttonPressed[touchListener.DOWN]	||	player.lastFacing == 1) 	{ bullet.setYVelocity(-15); }
+					if(touchListener.buttonPressed[touchListener.LEFT]	||	player.lastFacing == 0) 	{ bullet.setXVelocity(-15); }
+					if(touchListener.buttonPressed[touchListener.RIGHT]	||	player.lastFacing == 2) 	{ bullet.setXVelocity(15); }
 					bullet.isBullet = true;
 					bullets.add(bullet);
 				}
@@ -238,19 +321,35 @@ public class TSPGame extends ApplicationAdapter {
 		}
 
 		// HUD management
-		batch.draw(Textures.HUD,  0, screenHeight*32);	// must go last, has to display over everything else
-		font.draw(batch,  "Your lives: " + player.lives,  10, (screenHeight*32)+48);
+		batch.draw(Textures.HUD, 0, gameHeight - 64);	// must go last, has to display over everything else
+		font.draw(batch, "Your lives: " + player.lives, 10, (gameHeight - 64) + 48);
 		for(int i = 0; i < ammo; i += 1) {
-			batch.draw(Textures.BULLET,  i*7,  screenHeight*32);
+			batch.draw(Textures.BULLET,  i*7,  gameHeight - 64);
 		}
 
 		batch.end();
+
+		stage.act();
+		stage.draw();
 		// Everything that is drawn to the screen should be between ".begin" and ".end"
+	}
+
+	@Override
+	public void dispose() {
+		batch.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width,height);
 		camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
 	}
 }
