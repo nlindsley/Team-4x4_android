@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/activity_splash_screen.xml",
-        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/activity_splash_screen.xml"
-    },
-    {
         "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/credits_screen.xml",
         "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/credits_screen.xml"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/activity_splash_screen.xml",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/activity_splash_screen.xml"
     },
     {
         "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/high_score_screen.xml",
@@ -20,12 +20,12 @@
         "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/layout/high_score_screen.xml"
     },
     {
-        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/story_screen.xml",
-        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/story_screen.xml"
-    },
-    {
         "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/layout/credits_screen.xml",
         "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/layout/credits_screen.xml"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/build/intermediates/res/merged/debug/layout/story_screen.xml",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/story_screen.xml"
     },
     {
         "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/layout/activity_main_screen.xml",
@@ -40,11 +40,11 @@
         "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android/android/res/layout/tutorial_screen.xml"
     },
     {
-        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/layout/tutorial_screen.xml",
-        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/layout/tutorial_screen.xml"
-    },
-    {
         "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/layout/activity_splash_screen.xml",
         "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/layout/activity_splash_screen.xml"
+    },
+    {
+        "merged": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/build/intermediates/res/merged/debug/layout/tutorial_screen.xml",
+        "source": "/Users/nicklindsley/Documents/Github/Team-4x4_android1/android/res/layout/tutorial_screen.xml"
     }
 ]

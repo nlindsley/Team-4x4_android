@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,17 +44,30 @@ public class TSPGame extends ApplicationAdapter {
 	Stage 			stage;
 	SpriteBatch 	batch;
 	Player			player;
+	String[]		levels;
+	String[][]		rooms		= new String[8][8];			// contains all rooms for the level
+	List<Boss>		bosses		= new ArrayList<Boss>();
 	List<Enemy>		enemies		= new ArrayList<Enemy>();
 	List<Bullet>	bullets		= new ArrayList<Bullet>(); 		// of type character because they have the same traits
 	List<Block>		blockArr	= new ArrayList<Block>();		// an array list allows for multiple on screen
 	List<Background>bgArr		= new ArrayList<Background>();
 	List<Item>		items		= new ArrayList<Item>();		// list of active items
-	List<String[][]>levels		= new ArrayList<String[][]>();		// contains all levels for the game
-	String[][]		rooms		= new String[8][8];			// contains all rooms for the level
 	Listener		keyBoardListener;
-	TouchListener touchListener;
-	int ammo = 10;
+	TouchListener 	touchListener;
 	BitmapFont font;	// pre-made font for libgdx
+
+	private State state = State.RUN;
+
+	private int enemiesKilled = 0;
+
+	boolean deadState = false;
+	boolean miniKilled = false;
+	boolean bossKilled = false;
+
+	int[] startRoom = new int[2];
+	int levelNum = 1;
+	int ammo = 10;
+
 	final int gameHeight = 512;
 	final int gameWidth = 512;
 	int screenHeight;
@@ -65,7 +79,6 @@ public class TSPGame extends ApplicationAdapter {
 		// Scales the screen with black bars
 		screenHeight = Gdx.graphics.getHeight();
 		screenWidth = Gdx.graphics.getWidth();
-		Gdx.app.log("!!!", "height = "+screenHeight+", width = "+screenWidth);
 		camera = new OrthographicCamera();
 		viewport = new StretchViewport(gameWidth, gameHeight, camera);
 		viewport.apply();
@@ -73,16 +86,17 @@ public class TSPGame extends ApplicationAdapter {
 
 
 		// Loads level and room
+		levels = new String[] {"", "level1maps", "level2maps", "level3maps", "level4maps", "level5maps", "level6maps", "level7maps", "level8maps"};
 		loadLevel("level1maps/level1.txt");
-		loadRoom("level1maps/l1r1.txt");
-		player.currentRoomX = 0;	// set player tracking to first room on map (bottom-left corner)
-		player.currentRoomY = 4;
+
+		player.isKnight = true;
+
 
 		batch	= new SpriteBatch();
 		font	= new BitmapFont();				// default 15pt arial from libgdx JAR file
 		keyBoardListener = new Listener();
 		touchListener = new TouchListener(gameHeight, gameWidth, screenHeight, screenWidth);
-		//Gdx.input.setInputProcessor(keyBoardListener);
+		Gdx.input.setInputProcessor(touchListener);
 
 
 		// Creates overlay for UI
@@ -132,15 +146,6 @@ public class TSPGame extends ApplicationAdapter {
 		buttonPause.setHeight(50);
 		buttonPause.setPosition(231, 0);
 
-		// Add listeners
-		buttonUp.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("!!!", "Up Button clicked");
-				player.yMove(5);	player.lastFacing = 3; player.defText = Textures.PLAYER3;
-			}
-		});
-
 		// Add buttons to stage to be drawn
 		stage.addActor(buttonUp);
 		stage.addActor(buttonDown);
@@ -155,6 +160,9 @@ public class TSPGame extends ApplicationAdapter {
 
 	/** loads the level based on a file input of 0's (air), 1's (blocks), and x's(spawns). */
 	public void loadLevel(String levelx) {
+		miniKilled = false;
+		bossKilled = false;
+
 		int lineNum = 0;
 		FileHandle fileHandle;
 		try {
@@ -173,6 +181,10 @@ public class TSPGame extends ApplicationAdapter {
 					else {
 						rooms[i][j] = levelGrid[i];
 					}
+					if(rooms[i][j].contains("r1.txt")) {
+						startRoom[0] = i;
+						startRoom[1] = j;
+					}
 				}
 				j += 1;
 
@@ -182,6 +194,8 @@ public class TSPGame extends ApplicationAdapter {
 			System.out.println("CUSTOM ERROR: NEEDS A LEVEL FILE");
 			e.printStackTrace();
 		}
+
+		loadRoom(levels[levelNum] + "/l" + levelNum + "r1.txt");
 	}
 
 	/** loads the room based on a file input. */
@@ -200,36 +214,57 @@ public class TSPGame extends ApplicationAdapter {
 			for(int i = 0; i < blockArr.size(); i += 1)	{ blockArr.remove(i);	i -= 1;	}
 			for(int i = 0; i < enemies.size(); i += 1)	{ enemies.remove(i);	i -= 1;	}
 			for(int i = 0; i < items.size(); i += 1)	{ items.remove(i);		i -= 1;	}
+			for(int i = 0; i < bosses.size(); i += 1)	{ bosses.remove(i);		i -= 1; }
 
 			String[] lines = fileContents.split("\n");
 			while(!lines[lineNum].isEmpty()) {
 				String[] levelGrid = lines[lineNum].split(" ");	// puts everything in-between white-spaces into an array spot
 
 				for(int i = 0; i < levelGrid.length; i += 1) {
-					Background grass = new Background(this, i*32, blockHeight*32);
+					Background grass = new Background(this, i*32, blockHeight*32, levelNum);
 					bgArr.add(grass);
 					if(levelGrid[i].equals("1")) {
-						Block block = new Block(this, i*32, blockHeight*32);
+						Block block = new Block(this, i*32, blockHeight*32, levelNum);
 						if(i == 0 || i == levelGrid.length-1 || blockHeight == 0 || blockHeight == levelGrid.length-1) {
 							block.unbreakable = true;
 						}
 						blockArr.add(block);
 					}
 					if(levelGrid[i].equals("p")) {
-						player	= new Player(this,i*32,blockHeight*32);
+						if(player == null) {
+							player = new Player(this, i * 32, blockHeight * 32);
+						}
+
+						player.currentRoomX = startRoom[0];
+						player.currentRoomY = startRoom[1];
+					}
+					if(levelGrid[i].equals("e")) {
+						enemies.add(0, new Enemy(this,i*32,blockHeight*32, true));
+						enemies.get(0).setXVelocity(0);
+						enemies.get(0).defText = Textures.ENEMY1;
 					}
 					if(levelGrid[i].equals("x")) {
-						enemies.add(0, new Enemy(this,i*32,blockHeight*32));
+						enemies.add(0, new Enemy(this, i * 32, blockHeight * 32, true));
 						enemies.get(0).setXVelocity(1);
-						enemies.get(0).xPatrol = true;
+						//enemies.get(0).xPatrol = true;
 					}
 					if(levelGrid[i].equals("y")) {
-						enemies.add(0, new Enemy(this,i*32,blockHeight*32));
+						enemies.add(0, new Enemy(this, i * 32, blockHeight * 32, false));
 						enemies.get(0).setYVelocity(1);
-						enemies.get(0).xPatrol = false;
+						//enemies.get(0).xPatrol = false;
+					}
+					if(levelGrid[i].equals("mb")) {
+						if(miniKilled) { continue; }
+						bosses.add(0, new Boss(this,i*32,blockHeight*32));
+						bosses.get(0).mini = true;
+					}
+					if(levelGrid[i].equals("b")) {
+						if(bossKilled) { continue; }
+						bosses.add(0, new Boss(this,i*32,blockHeight*32));
+						bosses.get(0).mini = false;
 					}
 					if(levelGrid[i].equals("i")) {
-						items.add(new Item(this, i*32,blockHeight*32));
+						//items.add(new Item(this, i*32,blockHeight*32));
 					}
 				}
 				blockHeight += 1;
@@ -245,93 +280,245 @@ public class TSPGame extends ApplicationAdapter {
 	/** gets called hundreds of times per second. Similar to tick or frames. */
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);	// r,g,b,alpha (values: 0-1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		player.update();
-		for(Enemy e : enemies) { e.update(); }
+		switch (state) {
+			case RUN:
 
-		// Player Management
-		if(player.alive) {
-			if(touchListener.buttonPressed[touchListener.LEFT])		{ player.xMove(-5);	player.lastFacing = 0; player.defText = Textures.PLAYER0; }
-			if(touchListener.buttonPressed[touchListener.RIGHT])	{ player.xMove(5);	player.lastFacing = 2; player.defText = Textures.PLAYER2; }
-			if(touchListener.buttonPressed[touchListener.UP])		{ player.yMove(5);	player.lastFacing = 3; player.defText = Textures.PLAYER3; }
-			if(touchListener.buttonPressed[touchListener.DOWN])		{ player.yMove(-5);	player.lastFacing = 1; player.defText = Textures.PLAYER1; }
-			if(touchListener.buttonPressed[touchListener.B])		{
-				touchListener.buttonPressed[touchListener.B] = false;	// fires once per press
-				if(ammo > 0) {
-					ammo -= 1;
-					Bullet bullet = new Bullet(this,(int)player.x, (int)player.y+8);
-					if(touchListener.buttonPressed[touchListener.UP]	||	player.lastFacing == 3)		{ bullet.setYVelocity(15); }
-					if(touchListener.buttonPressed[touchListener.DOWN]	||	player.lastFacing == 1) 	{ bullet.setYVelocity(-15); }
-					if(touchListener.buttonPressed[touchListener.LEFT]	||	player.lastFacing == 0) 	{ bullet.setXVelocity(-15); }
-					if(touchListener.buttonPressed[touchListener.RIGHT]	||	player.lastFacing == 2) 	{ bullet.setXVelocity(15); }
-					bullet.isBullet = true;
-					bullets.add(bullet);
+				Gdx.gl.glClearColor(0, 0, 0, 1);    // r,g,b,alpha (values: 0-1);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				camera.update();
+				player.update();
+				for (Enemy e : enemies) {
+					e.update();
 				}
-			}
-		}
-		
-		// Everything that is drawn to the screen should be between ".begin" and ".end"
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
 
-		for(Background c : bgArr) 	{ c.draw(batch); }
-		for(Bullet c : bullets) 	{ c.draw(batch); }
-		for(Block c : blockArr) 	{ c.draw(batch); }
-		for(Item c : items) 		{ c.draw(batch); }
-		for(Enemy e : enemies) 		{ e.draw(batch); }
-		player.draw(batch);
-
-		// bullet management
-		for(int i = 0; i < bullets.size(); i += 1) {
-			bullets.get(i).update();
-
-			for(Enemy e : enemies) {
-				if(bullets.get(i).isCollidingWith(e)) {
-					e.lives -= 1;
-					bullets.get(i).alive = false;
+				// Player Management
+				if (player.alive) {
+					if (touchListener.buttonPressed[touchListener.LEFT]) {
+						player.xMove(-5);
+						player.lastFacing = 0;
+						player.defText = Textures.PLAYER0;
+					}
+					if (touchListener.buttonPressed[touchListener.RIGHT]) {
+						player.xMove(5);
+						player.lastFacing = 2;
+						player.defText = Textures.PLAYER2;
+					}
+					if (touchListener.buttonPressed[touchListener.UP]) {
+						player.yMove(5);
+						player.lastFacing = 3;
+						player.defText = Textures.PLAYER3;
+					}
+					if (touchListener.buttonPressed[touchListener.DOWN]) {
+						player.yMove(-5);
+						player.lastFacing = 1;
+						player.defText = Textures.PLAYER1;
+					}
+					if (touchListener.buttonPressed[touchListener.A]) {
+						touchListener.buttonPressed[touchListener.A] = false;    // fires once per press
+						player.accessInventory();
+					}
+					if (touchListener.buttonPressed[touchListener.PAUSE]) {
+						touchListener.buttonPressed[touchListener.PAUSE] = false;
+						state = State.PAUSE;
+						break;
+					}
 				}
-			}
-			if(!bullets.get(i).alive) {	// ... check if 'dead'
-				bullets.remove(i);		// ... remove if 'dead'
-				i -= 1;					// prevents the loop from skipping the next bullet
-			}
-		}
-		// block management
-		for(int i = 0; i < blockArr.size(); i += 1) {	// for each bullet
-			if(!blockArr.get(i).alive) {				// ... check if 'dead'
-				blockArr.remove(i);						// ... remove if 'dead'
-				i -= 1;									// prevents the loop from skipping the next bullet
-			}
-		}
-		// item management
-		for(int i = 0; i < items.size(); i += 1) {
-			if(!items.get(i).alive) {
-				items.remove(i);
-				i -= 1;
-			}
-		}
-		// enemy management
-		for(int i = 0; i < enemies.size(); i += 1) {
-			if(enemies.get(i).lives <= 0) {
-				enemies.remove(i);
-				i -= 1;
-			}
-		}
 
-		// HUD management
-		batch.draw(Textures.HUD, 0, gameHeight - 64);	// must go last, has to display over everything else
-		font.draw(batch, "Your lives: " + player.lives, 10, (gameHeight - 64) + 48);
-		for(int i = 0; i < ammo; i += 1) {
-			batch.draw(Textures.BULLET,  i*7,  gameHeight - 64);
-		}
+				// Everything that is drawn to the screen should be between ".begin" and ".end"
+				batch.setProjectionMatrix(camera.combined);
+				batch.begin();
 
-		batch.end();
+				for (Background c : bgArr) 	{ c.draw(batch); }
+				for (Bullet c : bullets) 	{ c.draw(batch); }
+				for (Block c : blockArr) 	{ c.draw(batch); }
+				for (Item c : items) 		{ c.draw(batch); }
+				for (Enemy e : enemies) 	{ e.draw(batch); }
+				for (Boss b : bosses) 		{ b.draw(batch); }
+				player.draw(batch);
+
+				// bullet management
+				for (int i = 0; i < bullets.size(); i += 1) {
+					bullets.get(i).update();
+
+					for (Enemy e : enemies) {
+						if (bullets.get(i).isCollidingWith(e)) {
+							e.lives -= 1;
+							bullets.get(i).alive = false;
+						}
+					}
+					if (!bullets.get(i).alive) {    // ... check if 'dead'
+						bullets.remove(i);        // ... remove if 'dead'
+						i -= 1;                    // prevents the loop from skipping the next bullet
+					}
+				}
+				// block management
+				for (int i = 0; i < blockArr.size(); i += 1) {    // for each bullet
+					if (!blockArr.get(i).alive) {                // ... check if 'dead'
+						blockArr.remove(i);                        // ... remove if 'dead'
+						i -= 1;                                    // prevents the loop from skipping the next bullet
+					}
+				}
+				// item management
+				for (int i = 0; i < items.size(); i += 1) {
+					if (!items.get(i).alive) {
+						items.remove(i);
+						i -= 1;
+					}
+				}
+				// enemy management
+				for (int i = 0; i < enemies.size(); i += 1) {
+					if (enemies.get(i).lives <= 0) {
+						enemies.get(i).dropItem();
+						enemies.remove(i);
+						i -= 1;
+						enemiesKilled++;
+					}
+				}
+				// boss management
+				for (int i = 0; i < bosses.size(); i += 1) {
+					if (bosses.get(i).lives <= 0) {
+						if (bosses.get(i).mini) {
+							miniKilled = true;
+						} else {
+							bossKilled = true;
+						}
+						bosses.remove(i);
+
+						if (bossKilled && miniKilled) {
+							player = null;    // nulling the player makes respawning in the next floor easier
+							loadLevel(levels[++levelNum] + "/level" + levelNum + ".txt");
+						}
+					}
+				}
+				// Inventory management
+				if (touchListener.buttonPressed[touchListener.A]) {
+					batch.draw(player.getSelectedInventory().defText, (float) player.x, (float) player.y);
+				}
+
+				// HUD management
+				batch.draw(Textures.HUD, 0, gameHeight - 64);    // must go last, has to display over everything else
+				font.draw(batch, "Your lives: " + player.lives, 10, (gameHeight - 64) + 48);
+				for (int i = 0; i < ammo; i += 1) {
+					batch.draw(Textures.BULLET, i * 7, gameHeight - 64);
+				}
+
+				if (touchListener.buttonPressed[touchListener.A]) {
+					touchListener.buttonPressed[touchListener.A] = false;
+					player.attack();
+					batch.draw(player.getSelectedInventory().defText, (float) player.getSelectedInventory().x, (float) player.getSelectedInventory().y);
+				}
+
+				if (deadState) {
+					DBHookUp db = new DBHookUp();
+					db.updateDB(enemiesKilled);
+					Gdx.app.exit();
+				}
+
+				batch.end();
+				break;
+
+			case PAUSE:
+				if (touchListener.buttonPressed[touchListener.PAUSE]) {
+					touchListener.buttonPressed[touchListener.PAUSE] = false;
+					state = State.RUN;
+					break;
+				}
+				batch.begin();
+
+				for(Background b: bgArr)	{	b.draw(batch); }
+				for(Bullet b	: bullets)	{	b.draw(batch); }
+				for(Block b		: blockArr)	{	b.draw(batch); }
+				for(Enemy e		: enemies)	{	e.draw(batch); }
+				for(Item i		: items)	{	i.draw(batch); }
+				for(Boss b		: bosses)	{	b.draw(batch); }
+				player.draw(batch);
+
+				// bullet management
+				for(int i = 0; i < bullets.size(); i += 1) {
+					bullets.get(i).update();
+
+					for(Enemy e : enemies) {
+						if(bullets.get(i).isCollidingWith(e)) {
+							e.lives -= 1;
+							bullets.get(i).alive = false;
+						}
+					}
+
+					if(!bullets.get(i).alive) {	// ... check if 'dead'
+						bullets.remove(i);		// ... remove if 'dead'
+						i -= 1;					// prevents the loop from skipping the next bullet
+					}
+				}
+				// block management
+				for(int i = 0; i < blockArr.size(); i += 1) {	// for each bullet
+					if(!blockArr.get(i).alive) {	// ... check if 'dead'
+						blockArr.remove(i);			// ... remove if 'dead'
+						i -= 1;						// prevents the loop from skipping the next bullet
+					}
+				}
+				// item management
+				for(int i = 0; i < items.size(); i += 1) {
+					if(!items.get(i).alive) {
+						items.remove(i);
+						i -= 1;
+					}
+				}
+				// enemy management
+				for(int i = 0; i < enemies.size(); i += 1) {
+					if(enemies.get(i).lives <= 0) {
+						enemies.get(i).dropItem();
+						enemies.remove(i);
+						i -= 1;
+					}
+				}
+				// boss management
+				for(int i = 0; i < bosses.size(); i += 1) {
+					if(bosses.get(i).lives <= 0) {
+						if(bosses.get(i).mini) { miniKilled = true; }
+						else { bossKilled = true; }
+						bosses.remove(i);
+
+						if(bossKilled && miniKilled) {
+							player = null;	// nulling the player makes respawning in the next floor easier
+							loadLevel(levels[++levelNum] + "/level" + levelNum + ".txt");
+						}
+					}
+				}
+				// HUD management
+				batch.draw(Textures.HUD, 0, gameHeight - 64);    // must go last, has to display over everything else
+				font.draw(batch, "Your lives: " + player.lives, 10, (gameHeight - 64) + 48);
+				if(state == State.PAUSE) {
+					font.setColor(Color.ORANGE);
+					font.getData().setScale(3,3);
+					font.draw(batch, "Paused", screenWidth*11, screenHeight*19);
+					font.setColor(Color.WHITE);
+					font.getData().setScale(1,1);
+				}
+				for (int i = 0; i < ammo; i += 1) {
+					batch.draw(Textures.BULLET, i * 7, gameHeight - 64);
+				}
+				if(deadState) {
+					font.setColor(Color.ORANGE);
+					font.draw(batch, "You have died...\nEnjoy the afterlife", (float)player.x-16, (float)player.y+96);
+					font.draw(batch, "kill me to restart", screenWidth*4, screenHeight*14);
+					font.draw(batch, "kill me to exit", screenWidth*24, screenHeight*14);
+					font.setColor(Color.WHITE);
+				}
+				batch.end();
+				break;
+			case STOPPED:
+				break;
+			case RESUME:
+				break;
+		}
 
 		stage.act();
 		stage.draw();
 		// Everything that is drawn to the screen should be between ".begin" and ".end"
+	}
+
+	public int getScore() {
+		return enemiesKilled;
 	}
 
 	@Override

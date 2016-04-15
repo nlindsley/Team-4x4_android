@@ -18,25 +18,17 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.tspandroid.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
-
-            <!--
-            This should be the launcher activity, changed for easier debugging
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
+-->
         </activity>
         <activity
             android:name="com.tspandroid.MainScreen"
